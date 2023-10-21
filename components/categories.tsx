@@ -9,9 +9,9 @@ interface CategoriesProps {
 export const Categories = ({ data }: CategoriesProps) => {
     const router = useRouter()
     const searchParams = useSearchParams()
-    const categoriyId = searchParams.get("categoriyId")
+    const categoryId = searchParams.get("categoryId")
     const onClick = (id: string | undefined) => {
-        const query = { categoriyId: id }
+        const query = { categoryId: id }
         const url = qs.stringifyUrl({
             url: window.location.href,
             query
@@ -34,7 +34,7 @@ export const Categories = ({ data }: CategoriesProps) => {
                 bg-primary/10
                 hover:opacity-75
                 transition
-                `, !categoriyId ? "bg-primary/25" : "bg-primary/10")}>newest
+                `, !categoryId ? "bg-primary/25" : "bg-primary/10")}>newest
             </button>
             {data.map((item) => (
                 <button onClick={() => onClick(item.id)} key={item.id} className={cn(`
@@ -51,7 +51,7 @@ export const Categories = ({ data }: CategoriesProps) => {
                 bg-primary/10
                 hover:opacity-75
                 transition
-                `, item.id === categoriyId ? "bg-primary/25" : "bg-primary/10")}>{item.name}
+                `, item.id === categoryId ? "bg-primary/25" : "bg-primary/10")}>{item.name}
                 </button>
             ))}
         </div>
