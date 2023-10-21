@@ -27,7 +27,7 @@ export const SearchInput = () => {
         router.push(url)
     }, [debouncedValue, router, categaryId])
     return (
-        <div className="relative mt-12 md:ml-16 ml-0">
+        <div className="relative">
             <Search className="absolute h-4 w-4 top-3 left-4 text-muted-foreground" />
             <Input placeholder="search..." className="pl-10 bg-primary/10" onChange={onChange} value={value}/>
         </div>

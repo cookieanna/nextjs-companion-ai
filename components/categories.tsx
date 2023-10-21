@@ -6,21 +6,21 @@ import qs from "query-string";
 interface CategoriesProps {
     data: Category[]
 }
-export const Categories = ({data}:CategoriesProps) => {
-const router = useRouter()
-const searchParams = useSearchParams()
-const categoriyId = searchParams.get("categoriyId")
-const onClick = (id:string|undefined)=>{
-const query ={categoriyId:id}
-const url = qs.stringifyUrl({
-    url:window.location.href,
-    query:query
-},{skipNull:true})
-router.push(url)
-}
+export const Categories = ({ data }: CategoriesProps) => {
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const categoriyId = searchParams.get("categoriyId")
+    const onClick = (id: string | undefined) => {
+        const query = { categoriyId: id }
+        const url = qs.stringifyUrl({
+            url: window.location.href,
+            query
+        }, { skipNull: true })
+        router.push(url)
+    }
     return (
         <div className="w-full overflow-x-auto space-x-2 flex p-1">
-            <button onClick={()=>onClick(undefined)} className={cn(`
+            <button onClick={() => onClick(undefined)} className={cn(`
                 flex
                 items-center
                 text-center
@@ -34,10 +34,10 @@ router.push(url)
                 bg-primary/10
                 hover:opacity-75
                 transition
-                `,!categoriyId?"bg-primary/25":"bg-primary/10")}>newest
-                </button>
-                {data.map((item)=>(
-                    <button onClick={()=>onClick(undefined)} key={item.id} className={cn(`
+                `, !categoriyId ? "bg-primary/25" : "bg-primary/10")}>newest
+            </button>
+            {data.map((item) => (
+                <button onClick={() => onClick(item.id)} key={item.id} className={cn(`
                 flex
                 items-center
                 text-center
@@ -51,9 +51,9 @@ router.push(url)
                 bg-primary/10
                 hover:opacity-75
                 transition
-                `,item.id ===categoriyId?"bg-primary/25":"bg-primary/10")}>{item.name}
+                `, item.id === categoriyId ? "bg-primary/25" : "bg-primary/10")}>{item.name}
                 </button>
-                ))}
+            ))}
         </div>
     );
 }
