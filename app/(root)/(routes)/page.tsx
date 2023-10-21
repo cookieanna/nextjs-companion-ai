@@ -1,9 +1,12 @@
 import { SearchInput } from "@/components/search-input";
-
-const RootPage = () => {
+import prisma from "@/prisma/client";
+import {Categories} from "@/components/categories";
+const RootPage = async() => {
+    const categories = await prisma.category.findMany()
     return (
         <div className="h-full p-4 space-y-2">
             <SearchInput />
+            <Categories data ={categories}/>
         </div>
     );
 }
