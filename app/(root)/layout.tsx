@@ -10,7 +10,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="hidden md:flex flex-col mt-4 w-20 inset-y-0 ">
         <SideBar />
       </div>
-      <main> {children}</main>
+      <main className="w-full"> {children}</main>
       </div>
       
 

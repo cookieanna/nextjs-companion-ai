@@ -20,7 +20,6 @@ export const SearchInput = () => {
             name: debouncedValue,
             categoryId: categoryId
         }
-        console.log(categoryId);
         
         const url = qs.stringifyUrl({
             url: window.location.href,
