@@ -29,7 +29,7 @@ const NavBar = () => {
                     <Sparkles className="ml-2 h-4 w-4 text-white fill-white"></Sparkles>
                 </Button>
                <ModeToggle/>
-                {/* <UserButton /> */}
+                <UserButton afterSignOutUrl="/"/>
             </div>
         </div>
     );

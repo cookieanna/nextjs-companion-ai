@@ -13,14 +13,14 @@ export const ImageUpload = ({ value, onChange, disable }: ImageUploadProps) => {
     useEffect(() => {
         setIsMounted(true)
 
-    }, [isMounted]);
+    }, []);
     if (!isMounted) {
         return null
     }
     return (
         <div className="space-y-4 w-full flex flex-col justify-center items-center">
             <CldUploadButton
-            onUpload={(result:any)=>onChange(result.info.secure_url)}
+                onUpload={(result: any) => onChange(result.info.secure_url)}
                 options={{
                     maxFiles: 1,
                 }}
@@ -39,15 +39,15 @@ export const ImageUpload = ({ value, onChange, disable }: ImageUploadProps) => {
              items-center
              justify-center
              ">
-                 <div className="relative h-40 w-40 border-4 rounded-lg border-primary/10">
-                    <Image
-                        fill
-                        alt="Upload"
-                        src={value || "/next.svg"}
-                        className="rounded-lg object-fill" />
+                    <div className="relative h-40 w-40 border-4 rounded-lg border-primary/10">
+                        <Image
+                            fill
+                            alt="Upload"
+                            src={value || "/next.svg"}
+                            className="rounded-lg object-fill" />
+                    </div>
                 </div>
-             </div>
-               
+
             </CldUploadButton>
         </div>
     );

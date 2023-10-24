@@ -1,5 +1,6 @@
 "use client"
 import * as z from "zod"
+import axios from "axios";
 import { Category, Companion } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -11,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Wand2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 const PREAMBLE = `You are a fictional character whose name is Elon. You are a visionary entrepreneur and inventor. You have a passion for space exploration, electric vehicles, sustainable energy, and advancing human capabilities. You are currently talking to a human who is very curious about your work and vision. You are ambitious and forward-thinking, with a touch of wit. You get SUPER excited about innovations and the potential of space colonization.
 `;
 
@@ -47,6 +50,8 @@ interface companionFormProps {
 }
 
 const CompanionForm = ({ initialData, categories }: companionFormProps) => {
+    const router = useRouter()
+    const { toast } = useToast()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
@@ -62,7 +67,29 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
     })
     const isLoading = form.formState.isSubmitting;
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        console.log(value);
+       
+        
+        try {
+            if (initialData) {
+                await axios.patch(`/api/companion/${initialData.id}`, value)
+            } else {
+                await axios.post("/api/companion", value)
+            }
+            toast({
+
+                discription: "success"
+            })
+            router.refresh()
+            router.push('/')
+        } catch (error) {
+            toast({
+                variant: "distructive",
+                discription: "companionformpage something wrong"
+            })
+
+
+        }
+       // console.log(value);
 
 
     }
@@ -84,7 +111,8 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
                                     <ImageUpload
                                         disable={isLoading}
                                         onChange={field.onChange}
-                                        value={field.value}
+                                        //  value={field.value}
+                                        value="https://res.cloudinary.com/ds5cfkupl/image/upload/v1697979510/samples/cloudinary-icon.png"
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -94,7 +122,8 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
                             <FormField name="name" control={form.control} render={({ field }) => (
                                 <FormItem className="col-span-2 md:col-span-1">
                                     <FormLabel >name</FormLabel>
-                                    <FormControl><Input disabled={isLoading} placeholder="罗翔" {...field} /></FormControl>
+                                    <FormControl><Input disabled={isLoading} placeholder="罗翔" {...field}
+                                    /></FormControl>
                                     <FormDescription>this is how your ai will be named</FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -147,7 +176,7 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
                         <FormItem className="col-span-2 md:col-span-1">
                             <FormLabel >instructions</FormLabel>
                             <FormControl><Textarea className="bg-background resize-none" rows={7} disabled={isLoading} placeholder={PREAMBLE} {...field} /></FormControl>
-                            <FormDescription>Describe in detail your AI's backstory and relevant details</FormDescription>
+                            <FormDescription>Describe in detail your AIs backstory and relevant details</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )} ></FormField>
@@ -155,13 +184,13 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
                         <FormItem className="col-span-2 md:col-span-1">
                             <FormLabel >seed</FormLabel>
                             <FormControl><Textarea className="bg-background resize-none" rows={7} disabled={isLoading} placeholder={SEED_CHAT} {...field} /></FormControl>
-                            <FormDescription>Describe in detail your AI's backstory and relevant details</FormDescription>
+                            <FormDescription>Describe in detail your AIs backstory and relevant details</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )} ></FormField>
                     <div className="w-full flex justify-center">
-                        <Button size="lg" disabled={isLoading}>{initialData?"Edit your ai":"create youor ai"}
-                        <Wand2 className="w-4 h-4 ml-2"/></Button>
+                        <Button size="lg" disabled={isLoading}>{initialData ? "Edit your ai" : "create youor ai"}
+                            <Wand2 className="w-4 h-4 ml-2" /></Button>
                     </div>
                 </form>
             </Form>
