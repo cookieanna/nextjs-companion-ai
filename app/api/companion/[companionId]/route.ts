@@ -1,5 +1,5 @@
 import prismadb from "@/prisma/db";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser,auth } from '@clerk/nextjs';
 import { NextResponse } from "next/server";
 
 export async function PATCH(req:Request,{params}:{params:{companionId:string}}) {
@@ -7,16 +7,17 @@ export async function PATCH(req:Request,{params}:{params:{companionId:string}}) 
     try {
         const body =await req.json();
         const user = await currentUser()
+        const { userId } : { userId: string | null } = auth();
+        
         const {src,name,description,instructions,seed,categoryId} = body;
         
         if (!params.companionId) {
             return new NextResponse("companion id is required",{status:400})
         }
-        // if (!user ||!user.id||!user.firstName) {
-        //     console.log(params.companionId);
+        if (!userId) {
             
-        //     return new NextResponse("UUnauthorized",{status:401})
-        // }
+            return new NextResponse("UUnauthorized",{status:401})
+        }
         if (!src||!name||!description ||!instructions ||!seed||!categoryId) {
             return new NextResponse("Missing required fields",{status:400})
         }
@@ -28,10 +29,10 @@ export async function PATCH(req:Request,{params}:{params:{companionId:string}}) 
             },
             data:{
                 categoryId,
-                // userId:user.id,
-                // userName:user.firstName,
-                userId:"user_2WzCCsToJJpsepjozVDIuxUC7Zh",
-                userName:'西西',
+                userId:user&&user.id||userId!,
+                userName:user&&user.firstName||"米喜喜",
+                // userId:"user_2WzCCsToJJpsepjozVDIuxUC7Zh",
+                // userName:'西西',
                 src,
                 name,
                 description,

@@ -1,5 +1,5 @@
 import prismadb from "@/prisma/db";
-import { currentUser } from "@clerk/nextjs";
+import { auth,currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 export async function POST(req:Request) {
@@ -9,10 +9,11 @@ export async function POST(req:Request) {
        
         
         const user = await currentUser()
+        const { userId } : { userId: string | null } = auth();
         const {src,name,description,instructions,seed,categoryId} = body;
-        // if (!user ||!user.id||!user.firstName) {
-        //     return new NextResponse("UUnauthorized",{status:401})
-        // }
+        if (!userId) {
+            return new NextResponse("UUnauthorized",{status:401})
+        }
         if (!src||!name||!description ||!instructions ||!seed||!categoryId) {
             return new NextResponse("Missing required fields",{status:400})
         }
@@ -21,10 +22,10 @@ export async function POST(req:Request) {
         const companion = await prismadb.companion.create({
             data:{
                 categoryId,
-                // userId:user.id,
-                // userName:user.firstName,
-                userId:"user_2WzCCsToJJpsepjozVDIuxUC7Zh",
-                userName:'西西',
+                userId:user&&user.id||userId!,
+                userName:user&&user.firstName||"米喜喜",
+                // userId:"user_2WzCCsToJJpsepjozVDIuxUC7Zh",
+                // userName:'西西',
                 src,
                 name,
                 description,
@@ -36,6 +37,6 @@ export async function POST(req:Request) {
        
     } catch (error) {
         console.log("COMPANION_POST",error);
-        return new NextResponse(`anna interal error`,{status:500})
+        return new NextResponse(`COMPANION_POST interal error`,{status:500})
     }
 }
