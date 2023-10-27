@@ -43,7 +43,8 @@ export const ImageUpload = ({ value, onChange, disable }: ImageUploadProps) => {
                         <Image
                             fill
                             alt="Upload"
-                            src={value || "/next.svg"}
+                           // src={"/placeholder.svg"}
+                            src={value||"/placeholder.svg"}
                             className="rounded-lg object-fill" />
                     </div>
                 </div>

@@ -35,7 +35,7 @@ const formSchema = z.object({
     }),
     description: z.string().min(2, { message: "description is required" }
     ),
-    instructions: z.string().min(200, { message: "instructions require  at lest 200 characters" }
+    instruction: z.string().min(200, { message: "instruction require  at lest 200 characters" }
     ),
     seed: z.string().min(200, { message: "seed require  at lest 200 characters" }
     ),
@@ -57,7 +57,7 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
         defaultValues: initialData || {
             name: "",
             description: "",
-            instructions: "",
+            instruction: "",
             seed: "",
             src: "",
             categoryId: undefined
@@ -76,15 +76,14 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
                 await axios.post("/api/companion", value)
             }
             toast({
-
-                discription: "success"
+                description: "success"
             })
             router.refresh()
             router.push('/')
         } catch (error) {
             toast({
-                variant: "distructive",
-                discription: "companionformpage something wrong"
+                variant: "destructive",
+                description: "companionformpage something wrong"
             })
 
 
@@ -111,8 +110,7 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
                                     <ImageUpload
                                         disable={isLoading}
                                         onChange={field.onChange}
-                                        //  value={field.value}
-                                        value="https://res.cloudinary.com/ds5cfkupl/image/upload/v1697979510/samples/cloudinary-icon.png"
+                                        value={field.value}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -168,13 +166,13 @@ const CompanionForm = ({ initialData, categories }: companionFormProps) => {
                     <div className="space-y-2 w-full">
                         <div>
                             <h3 className="text-lg font-medium">configration</h3>
-                            <p className="text-sm text-muted-foreground">Detailed instructions for ai Behaviour</p>
+                            <p className="text-sm text-muted-foreground">Detailed instruction for ai Behaviour</p>
                         </div>
                         <Separator className="bg-primary/10" />
                     </div>
-                    <FormField name="instructions" control={form.control} render={({ field }) => (
+                    <FormField name="instruction" control={form.control} render={({ field }) => (
                         <FormItem className="col-span-2 md:col-span-1">
-                            <FormLabel >instructions</FormLabel>
+                            <FormLabel >instruction</FormLabel>
                             <FormControl><Textarea className="bg-background resize-none" rows={7} disabled={isLoading} placeholder={PREAMBLE} {...field} /></FormControl>
                             <FormDescription>Describe in detail your AIs backstory and relevant details</FormDescription>
                             <FormMessage />

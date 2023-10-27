@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-      <ClerkProvider>
+       <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
       <body className={cn("bg-secondary",inter.className)}>
       <ThemeProvider
@@ -31,6 +31,6 @@ export default function RootLayout({
           <Toaster/>
           </ThemeProvider></body>
     </html>
-      </ClerkProvider>
+       </ClerkProvider>
   )
 }

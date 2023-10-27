@@ -6,15 +6,13 @@ export async function POST(req:Request) {
    
     try {
         const body =await req.json();
-       
-        
         const user = await currentUser()
         const { userId } : { userId: string | null } = auth();
-        const {src,name,description,instructions,seed,categoryId} = body;
+        const {src,name,description,instruction,seed,categoryId} = body;
         if (!userId) {
             return new NextResponse("UUnauthorized",{status:401})
         }
-        if (!src||!name||!description ||!instructions ||!seed||!categoryId) {
+        if (!src||!name||!description ||!instruction ||!seed||!categoryId) {
             return new NextResponse("Missing required fields",{status:400})
         }
       
@@ -22,14 +20,14 @@ export async function POST(req:Request) {
         const companion = await prismadb.companion.create({
             data:{
                 categoryId,
-                userId:user&&user.id||userId!,
-                userName:user&&user.firstName||"米喜喜",
+                userId:user?.id||userId ||"user_2WzCCsToJJpsepjozVDIuxUC7Zh",
+                userName:user?.firstName||"米喜喜",
                 // userId:"user_2WzCCsToJJpsepjozVDIuxUC7Zh",
                 // userName:'西西',
                 src,
                 name,
                 description,
-                instruction:instructions,
+                instruction:instruction,
                 seed,
             }
         })

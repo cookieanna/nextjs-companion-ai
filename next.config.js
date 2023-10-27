@@ -1,8 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images:{
-        domains:["localhost","res.cloudinary.com"],
-        //path:`${basePath}/_next/image`
+        // remotePatterns: [
+        //     {
+        //       protocol: 'https',
+        //       hostname: 'res.cloudinary.com',
+        //     },
+        //   ],
+         
+            domains: ['localhost','res.cloudinary.com','robohash.org'],
+          
     }
 }
 
