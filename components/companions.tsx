@@ -1,8 +1,10 @@
+"use client"
 import { Companion } from "@prisma/client";
 import Image from "next/image";
 import { Card, CardFooter, CardHeader } from "./ui/card";
 import Link from "next/link";
 import { MessagesSquare } from "lucide-react";
+import { CldImage } from "next-cloudinary";
 
 interface CompanionsProps {
     data: (Companion & {
@@ -18,6 +20,7 @@ export const Companions = ({ data }: CompanionsProps) => {
             <div className="pt-10 flex flex-col items-center justify-center space-y-3">
                 <div className="relative w-60 h-60">
                     <Image fill sizes="20" className="grayscale" alt="Empty" src='/empty.png' />
+
                 </div>
                 <p className="text-sm text-muted-foreground">no companions found</p>
             </div>
@@ -30,7 +33,9 @@ export const Companions = ({ data }: CompanionsProps) => {
                     <Link href={`/chat/${item.id}`}>
                         <CardHeader className="flex items-center justify-center text-center text-muted-foreground">
                             <div className="relative w-32 h-32 ">
-                                <Image fill alt="companion" src={item.src} className="rounded-xl object-cover" />
+                                {/* <Image fill alt="companion" src={item.src} className="rounded-xl object-cover" />
+                                */}
+                                <CldImage fill  className="rounded-xl object-cover" src={item.src} alt="companions" />
                             </div>
                             <p className="font-bold">{item.name}</p>
                             <p className="text-sm">{item.description}</p>
@@ -38,7 +43,7 @@ export const Companions = ({ data }: CompanionsProps) => {
                         <CardFooter className="flex items-center justify-between text-sm text-muted-foreground">
                             <p className="lowercase">@{item.userName}</p>
                             <div className="flex items-center">
-                                <MessagesSquare className="w-3 h-3 mr-1"/>
+                                <MessagesSquare className="w-3 h-3 mr-1" />
                                 {item._count.message}
                             </div>
                         </CardFooter>

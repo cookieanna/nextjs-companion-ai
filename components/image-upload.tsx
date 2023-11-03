@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { CldUploadButton } from "next-cloudinary";
+import { CldImage, CldUploadButton } from "next-cloudinary";
 import Image from "next/image";
 interface ImageUploadProps {
     value: string;
@@ -40,12 +40,16 @@ export const ImageUpload = ({ value, onChange, disable }: ImageUploadProps) => {
              justify-center
              ">
                     <div className="relative h-40 w-40 border-4 rounded-lg border-primary/10">
-                        <Image
+                        {/* <Image
                             fill
                             alt="Upload"
-                           // src={"/placeholder.svg"}
                             src={value||"/placeholder.svg"}
-                            className="rounded-lg object-fill" />
+                            className="rounded-lg object-fill" /> */}
+                        <CldImage
+                            fill
+                            className="rounded-xl object-cover"
+                            src={value || "/placeholder.svg"}
+                            alt="Upload" />
                     </div>
                 </div>
 

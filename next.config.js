@@ -8,7 +8,7 @@ const nextConfig = {
         //     },
         //   ],
          
-            domains: ['localhost','res.cloudinary.com','robohash.org'],
+            domains: ['res.cloudinary.com','robohash.org'],
           
     }
 }
